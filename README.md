@@ -1,4 +1,4 @@
-# cssrf
+# cssrf 🌰
 
 Basically the same thing as `https://github.com/d0nutptr/sic` but in Golang
 
