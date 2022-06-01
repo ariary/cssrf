@@ -5,4 +5,5 @@ type Config struct {
 	Port        string
 	ExternalUrl string
 	Charset     string
+	Template    string
 }
