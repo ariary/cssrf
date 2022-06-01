@@ -1,0 +1,2 @@
+# cssrf
+Ease CSS exfiltration
