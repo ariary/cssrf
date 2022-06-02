@@ -2,7 +2,8 @@
 
 <div align=center>
 <pre><code>
-<b> Extract juicy information using CSS injection</b>
+<b>Extract juicy information using CSS injection
+<i>especially csrf token 🥜</i></b>
 <br>
 <sup>Basically the same thing as <i><a href=https://github.com/d0nutptr/sic>https://github.com/d0nutptr/sic</a></i> but in Golang
 <br>I try my best to change the rust code but I lost so many time</sup>
