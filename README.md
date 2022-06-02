@@ -23,4 +23,4 @@ cssrf [flags] # nothing crazy => cssrf -h to get flags info
 
 *This help me solving a [root-me](https://www.root-me.org/fr/Challenges/Web-Client/CSS-Exfiltration) challenge*
 
-<sup>Posting solution is forbidden, thus the csrf token is not entire</sup>
+<sup>Posting solution is forbidden, thus the csrf token is not integer</sup>
