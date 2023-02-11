@@ -8,5 +8,6 @@ type Config struct {
 	Prefix             string
 	BackgroundTemplate string
 	ImportTemplate     string
+	Elt                string
 	Channels           []chan string
 }

